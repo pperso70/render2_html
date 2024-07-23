@@ -23,9 +23,13 @@
     <button onclick="sendCommand('LED_OFF')">Éteindre LED</button>
     <div id="data">
         <h2>Données du capteur</h2>
+        <p>T Cycle: <span id="ref_position">--</span></p>
         <p>Position: <span id="position">--</span></p>
         <p>Température radiateur: <span id="temperature">--</span>°C</p>
         <p>RSSI: <span id="rssi">--</span>%</p>
+        <p> redemarrage: <span id="redemarrage">--</span></p>
+
+       
     </div>
     <img id="cameraImage" alt="Image de la caméra">
 
@@ -42,8 +46,11 @@
         socket.onmessage = function(event) {
              if (event.data.length < 100) {
             //if (typeof event.data === 'string') {
-                console.log("Données capteurs reçues : ", event.data);
+                //console.log("Données capteurs reçues : ", event.data);
                 const data = JSON.parse(event.data);
+                if (data.position) {
+                document.getElementById('ref_position').textContent = data.ref_position;
+                }
                 if (data.position) {
                 document.getElementById('position').textContent = data.position;
                 }
@@ -53,8 +60,11 @@
                 if (data.rssi) {
                 document.getElementById('rssi').textContent = data.rssi;
                 }
+                if (data.rssi) {
+                document.getElementById('redemarrage').textContent = data.restarts;
+                }
             } else {
-                console.log("Image reçue, taille:", event.data.length, "bytes");
+                //console.log("Image reçue, taille:", event.data.length, "bytes");
 
                 // Créer un Blob à partir des données binaires
                 const blob = new Blob([event.data], { type: 'image/jpeg' });
@@ -70,13 +80,13 @@
                     URL.revokeObjectURL(this.src);
                 }
 
-                console.log("URL de l'image créée:", imageUrl);
+                //console.log("URL de l'image créée:", imageUrl);
 
                 // Optionnel : Afficher les premiers octets pour vérification
                 const reader = new FileReader();
                 reader.onload = function() {
                     const arr = new Uint8Array(reader.result);
-                    console.log("Premiers octets:", Array.from(arr.slice(0, 16)).map(b => b.toString(16).padStart(2, '0')).join(' '));
+                    //console.log("Premiers octets:", Array.from(arr.slice(0, 16)).map(b => b.toString(16).padStart(2, '0')).join(' '));
                 }
                 reader.readAsArrayBuffer(blob.slice(0, 16));
             }
