@@ -23,7 +23,7 @@
     <button onclick="sendCommand('LED_OFF')">Éteindre LED</button>
     <div id="data">
         <h2>Données du capteur</h2>
-        <p>T Cycle: <span id="ref_position">--</span></p>
+        <p>T Cycle: <span id="temps_de_cycle">--</span></p>
         <p>Position: <span id="position">--</span></p>
         <p>Température radiateur: <span id="temperature">--</span>°C</p>
         <p>RSSI: <span id="rssi">--</span>%</p>
@@ -34,8 +34,6 @@
     <img id="cameraImage" alt="Image de la caméra">
 
     <script>
-        //const socket = new WebSocket('wss://flash-wild-ketchup.glitch.me');
-       // const socket = new WebSocket('wss://confirmed-careful-objective.glitch.me');
         const socket = new WebSocket('wss://render2-9y2z.onrender.com/web');
         // copie depuis render: https://render2-9y2z.onrender.com
         //pour acceder a la page: https://pperso70.github.io/render2_html/
@@ -50,7 +48,7 @@
                 //console.log("Données capteurs reçues : ", event.data);
                 const data = JSON.parse(event.data);
                 if (data.position) {
-                document.getElementById('ref_position').textContent = data.ref_position;
+                document.getElementById('temps_de_cycle').textContent = data.temps_de_cycle;
                 }
                 if (data.position) {
                 document.getElementById('position').textContent = data.position;
@@ -80,9 +78,9 @@
                 document.getElementById('cameraImage').onload = function() {
                     URL.revokeObjectURL(this.src);
                 }
-
                 //console.log("URL de l'image créée:", imageUrl);
-
+                
+                /*
                 // Optionnel : Afficher les premiers octets pour vérification
                 const reader = new FileReader();
                 reader.onload = function() {
@@ -90,6 +88,7 @@
                     //console.log("Premiers octets:", Array.from(arr.slice(0, 16)).map(b => b.toString(16).padStart(2, '0')).join(' '));
                 }
                 reader.readAsArrayBuffer(blob.slice(0, 16));
+                */
             }
         };
 
