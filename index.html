@@ -71,7 +71,7 @@
 
   <div id="data">
     <h2 style="display:inline;">Données du système</h2>
-    <p style="display:inline; margin-left: 10px;">mvdch</p>
+    <p style="display:inline; margin-left: 10px;">render2</p>
     <p>T Cycle: <span id="temps_de_cycle">--</span></p>
     <p>Position: <span id="position">--</span></p>
     <p>Température radiateur: <span id="temperature">--</span>°C</p>
@@ -103,7 +103,7 @@
 
     window.onload = function () {
       //socket = new WebSocket('wss://mvdch.glitch.me');
-      socket = new WebSocket('wss://render2-9y2z.onrender.com/web');
+      socket = new WebSocket('wss://render2-9y2z.onrender.com');
       
       socket.onopen = function (e) {
         sendCommand('démarre');
